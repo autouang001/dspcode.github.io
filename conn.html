@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
+  <style>
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  background-color: mediumpurple;
+}
+
+#videoCall {
+  display: block;
+}
+
+video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#localVideo {
+  position: fixed;
+  top: 0vh;
+  height: 25vh;
+  width: 25vw;
+}
+
+#remoteVideo {
+  position: fixed;
+  bottom: 0vh;
+  height: 100vh;
+  width: 100vw;
+}
+
+#startVideo {
+  position: absolute;
+  bottom: 3vh;
+  left: 35vw;
+  height: 7vh;
+  width: 30vw;
+  background-color: black;
+  color: goldenrod;
+  border-radius: 10px;
+  display: none;
+}
+
+#endVideo {
+  position: absolute;
+  bottom: 3vh;
+  right: 35vw;
+  height: 7vh;
+  width: 30vw;
+  background-color: black;
+  color: goldenrod;
+  border-radius: 10px;
+  display: none;
+}
+  </style>
+  <title>dspChat</title>
+</head>
+
+<body>
+  <div id="app">
+    <div id="videoCall">
+      <video id="remoteVideo" autoplay playsinline></video>
+      <video id="localVideo" autoplay muted playsinline></video>
+      <button id="startVideo" onclick="connToRecv()">Connect</button>
+      <button id="endVideo" onclick="endVideoCall()">End Video</button>
+    </div>
+  </div>
+  <script src="conn.js"></script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+
+</html>
